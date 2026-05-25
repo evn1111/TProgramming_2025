@@ -45,17 +45,20 @@ function printTaskA(a: number, b: number, x1: number, xk: number, dx: number): v
 function printTaskB(a: number, b: number, xValues: number[]): void {
   console.log("Task B: given x values");
 
-  const rows = xValues.map((x) => {
+  const rows: { x: number; y: number | string }[] = [];
+
+  for (let i = 0; i < xValues.length; i++) {
+    const x = xValues[i];
     try {
       const y = calculateY(a, b, x);
-      return { x: round4(x), y: round4(y) };
+      rows.push({ x: round4(x), y: round4(y) });
     } catch (error) {
-      return {
+      rows.push({
         x: round4(x),
         y: error instanceof Error ? error.message : "Calculation error",
-      };
+      });
     }
-  });
+  }
 
   console.table(rows);
 }
