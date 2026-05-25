@@ -20,44 +20,42 @@ function round4(value: number): number {
   return Number(value.toFixed(4));
 }
 
+function printRow(a: number, b: number, x: number): void {
+  try {
+    const y = calculateY(a, b, x);
+    console.log(`x=${round4(x)}, y=${round4(y)}`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Calculation error";
+    console.log(`x=${round4(x)}, y=${message}`);
+  }
+}
+
 function printTaskA(a: number, b: number, x1: number, xk: number, dx: number): void {
   console.log("Task A: x from x1 to xk with step dx");
 
-  const rows: { x: number; y: number | string }[] = [];
-
-  for (let x = x1; x <= xk + 1e-12; x += dx) {
+  let x = x1;
+  while (x <= xk + 1e-12) {
     const xRounded = Number(x.toFixed(10));
-
-    try {
-      const y = calculateY(a, b, xRounded);
-      rows.push({ x: round4(xRounded), y: round4(y) });
-    } catch (error) {
-      rows.push({
-        x: round4(xRounded),
-        y: error instanceof Error ? error.message : "Calculation error",
-      });
-    }
+    printRow(a, b, xRounded);
+    x += dx;
   }
-
-  console.table(rows);
 }
 
-function printTaskB(a: number, b: number, xValues: number[]): void {
+function printTaskB(
+  a: number,
+  b: number,
+  xA: number,
+  xB: number,
+  xC: number,
+  xD: number,
+  xE: number
+): void {
   console.log("Task B: given x values");
-
-  const rows = xValues.map((x) => {
-    try {
-      const y = calculateY(a, b, x);
-      return { x: round4(x), y: round4(y) };
-    } catch (error) {
-      return {
-        x: round4(x),
-        y: error instanceof Error ? error.message : "Calculation error",
-      };
-    }
-  });
-
-  console.table(rows);
+  printRow(a, b, xA);
+  printRow(a, b, xB);
+  printRow(a, b, xC);
+  printRow(a, b, xD);
+  printRow(a, b, xE);
 }
 
 const a = 7.2;
@@ -67,7 +65,5 @@ const x1 = 1.56;
 const xk = 4.71;
 const dx = 0.63;
 
-const taskBX = [2.4, 2.8, 3.9, 4.7, 3.16];
-
 printTaskA(a, b, x1, xk, dx);
-printTaskB(a, b, taskBX);
+printTaskB(a, b, 2.4, 2.8, 3.9, 4.7, 3.16);
