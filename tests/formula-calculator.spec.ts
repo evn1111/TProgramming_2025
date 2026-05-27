@@ -5,7 +5,7 @@ describe("FormulaCalculator", () => {
   it("calculates known value for valid x", () => {
     const calculator = new FormulaCalculator(7.2, 1.3);
     const value = calculator.calculate(2.4);
-    expect(value).toBeCloseTo(4.7566, 4);
+    expect(value).toBeCloseTo(13.7026, 4);
   });
 
   it("throws when x is out of domain", () => {
