@@ -18,4 +18,12 @@ describe("Fox", () => {
   it("validates empty name", () => {
     expect(() => createFox("", 1, "red")).toThrow("Name is required");
   });
+
+  it("validates negative age", () => {
+    expect(() => createFox("Alisa", -1, "red")).toThrow("Age must be non-negative");
+  });
+
+  it("validates empty color", () => {
+    expect(() => createFox("Alisa", 1, " ")).toThrow("Color is required");
+  });
 });
